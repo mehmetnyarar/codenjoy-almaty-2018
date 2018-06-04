@@ -11,27 +11,25 @@ const WebSocket = require("ws");
 const ws = new WebSocket(server + "?user=" + userName + "&code=" + code);
 
 function commandForSnake(board) {
-  const state = utils.getCurrentState(board);
-  const matrix = utils.getScoreMatrix(board, state);
-  const col = state.position % 15;
-  const row = (state.position - col) / 15;
+  const snake = utils.getSnake(board);
+  const apple = utils.getApple(board);
+  const distance = utils.getDistance(snake.position, apple.position);
+  const suggestedMoves = utils.getSuggestedMoves(distance);
+  const scoreMatrix = utils.getScoreMatrix(
+    board,
+    snake.position,
+    suggestedMoves
+  );
+  const nextMove = utils.getNextMove(scoreMatrix);
 
-  let direction = "";
-  matrix.forEach(el => {
-    if (el.score === 1) {
-      direction = el.direction;
-    }
-  });
+  console.log("snake", snake);
+  console.log("apple", apple);
+  console.log("distance", distance);
+  console.log("suggestedMoves", suggestedMoves);
+  console.log("scoreMatrix", scoreMatrix);
+  console.log("nextMove", nextMove);
 
-  if (direction.length === 0) {
-    matrix.forEach(el => {
-      if (el.score === 0) {
-        direction = el.direction;
-      }
-    });
-  }
-
-  return direction;
+  return nextMove;
 }
 
 ws.on("open", function() {
