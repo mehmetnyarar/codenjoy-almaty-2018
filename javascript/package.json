@@ -1,0 +1,12 @@
+{
+  "name": "snake-codenjoy-client",
+  "description": "Javascript client for codenjoy game - Snake",
+  "version": "1.0.24",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "jest": "^23.1.0",
+    "ws": "5.2.x"
+  }
+}
